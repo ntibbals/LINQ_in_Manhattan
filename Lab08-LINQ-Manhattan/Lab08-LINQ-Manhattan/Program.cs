@@ -17,9 +17,8 @@ namespace Lab08_LINQ_Manhattan
 
         static void ReadJson()
         {
-            JObject cityObject = JObject.Parse(File.ReadAllText(Path));
-            using (StreamReader file = File.OpenText(Path));
-
+            JObject cityObject = JObject.Parse(File.ReadAllText(@"../../../../../data.json"));
+            Console.WriteLine(cityObject);           
         }
     }
 }
