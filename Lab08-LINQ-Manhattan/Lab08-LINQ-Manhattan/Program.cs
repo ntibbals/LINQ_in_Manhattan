@@ -15,14 +15,12 @@ namespace Lab08_LINQ_Manhattan
         {
             Console.WriteLine("Neighborhoods: ");
             //DisplayNeighborhoods(ReadJson());
-            //RemoveNeighborhoodBlanks(ReadJson());
-            //RemoveDuplicates(ReadJson());
-            //RemoveBlanksTwo(ReadJson());
-             FilterNeighborhoods(ReadJson());
+            DisplayNeighborhoodsE(RemoveNeighborhoodBlanks(ReadJson()));
+            DisplayNeighborhoodsE(RemoveDuplicates(ReadJson()));
+            DisplayNeighborhoodsE(RemoveBlanksTwo(ReadJson()));
+            DisplayNeighborhoodsE(FilterNeighborhoods(ReadJson()));
             Console.ReadLine();
-            
-
-
+           
         }
 
         /// <summary>
@@ -72,6 +70,23 @@ namespace Lab08_LINQ_Manhattan
         }
 
         /// <summary>
+        /// Display enumerable neighborhoods
+        /// </summary>
+        /// <param name="neighborhoods">Enumerable neighbords</param>
+        /// <returns>Neighborhoods</returns>
+        public static IEnumerable<Neighborhoods> DisplayNeighborhoodsE(IEnumerable<Neighborhoods> neighborhoods)
+        {
+            foreach (Neighborhoods item in neighborhoods)
+            {
+                if (item != null)
+                {
+                    Console.WriteLine($"- {item.Neighborhood}");
+                }
+            }
+
+            return neighborhoods;
+        }
+        /// <summary>
         /// Method that Removes all blank spaces from imported JSON file
         /// </summary>
         /// <param name="neighborhoods">imported JSON list</param>
@@ -81,13 +96,6 @@ namespace Lab08_LINQ_Manhattan
             IEnumerable<Neighborhoods> spacelessNeighborhoods = from neigh in neighborhoods
                                                          where neigh.Neighborhood.Length > 0
                                                          select neigh;
-            foreach (Neighborhoods item in spacelessNeighborhoods)
-            {
-                if (item != null)
-                {
-                    Console.Write($" {item.Neighborhood} |");
-                }
-            }
 
             return spacelessNeighborhoods;
         }
@@ -101,14 +109,6 @@ namespace Lab08_LINQ_Manhattan
         {
             IEnumerable<Neighborhoods> removeDupe = neighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
 
-            foreach (Neighborhoods item in removeDupe)
-            {
-                if (item != null)
-                {
-                    Console.WriteLine(item.Neighborhood);
-                }
-            }
-
             return removeDupe;
         }
 
@@ -121,13 +121,6 @@ namespace Lab08_LINQ_Manhattan
 
         {
             var filterNeigh = neighborhoods.Where(p => p.Neighborhood.Length > 0).GroupBy(n => n.Neighborhood).Select( t => t.First()); 
-            foreach (Neighborhoods item in filterNeigh)
-            {
-                if (item != null)
-                {
-                    Console.WriteLine($"- {item.Neighborhood}");
-                }
-            }
 
             return filterNeigh;
         }
@@ -140,13 +133,6 @@ namespace Lab08_LINQ_Manhattan
         public static IEnumerable<Neighborhoods> RemoveBlanksTwo(List<Neighborhoods> neighborhoods)
         {
             IEnumerable<Neighborhoods> removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
-            foreach (Neighborhoods item in removeBlanks)
-            {
-                if (item != null)
-                {
-                    Console.WriteLine(item.Neighborhood);
-                }
-            }
 
             return removeBlanks;
 
