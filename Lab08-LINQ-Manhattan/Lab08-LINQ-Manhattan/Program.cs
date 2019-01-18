@@ -16,7 +16,7 @@ namespace Lab08_LINQ_Manhattan
             Console.WriteLine("Hello World!");
             DisplayNeighborhoods(ReadJson());
             RemoveNeighborhoodBlanks(ReadJson());
-            RemoveDuplicates((ReadJson()));
+            RemoveDuplicates(RemoveNeighborhoodBlanks(ReadJson()));
             RemoveBlanksTwo(ReadJson());
             FilterNeighborhoods(ReadJson());
             Console.ReadLine();
@@ -28,7 +28,7 @@ namespace Lab08_LINQ_Manhattan
         /// <summary>
         /// Method to return a list containing all neighborhoods
         /// </summary>
-        /// <returns></returns>
+        /// <returns>parsed out json object of neighborhoods</returns>
         public static List<Neighborhoods> ReadJson()
         {
             JObject propObject = JObject.Parse(File.ReadAllText(@"../../../../../data.json"));
@@ -53,6 +53,11 @@ namespace Lab08_LINQ_Manhattan
             return listProps;
         }
 
+        /// <summary>
+        /// Display a list of neighborhoods
+        /// </summary>
+        /// <param name="neighborhoods">List of Neighborhoods</param>
+        /// <returns>neighborhoods</returns>
         public static List<Neighborhoods> DisplayNeighborhoods(List<Neighborhoods> neighborhoods)
         {
             foreach (Neighborhoods item in neighborhoods)
@@ -65,6 +70,12 @@ namespace Lab08_LINQ_Manhattan
 
             return neighborhoods;
         }
+
+        /// <summary>
+        /// Method that Removes all blank spaces from imported JSON file
+        /// </summary>
+        /// <param name="neighborhoods">imported JSON list</param>
+        /// <returns>Enumerable list of neighborhoods with blanks spaces removed</returns>
         public static IEnumerable<Neighborhoods> RemoveNeighborhoodBlanks(List<Neighborhoods> neighborhoods)
         {
             IEnumerable<Neighborhoods> spacelessNeighborhoods = from neigh in neighborhoods
@@ -81,6 +92,11 @@ namespace Lab08_LINQ_Manhattan
             return spacelessNeighborhoods;
         }
 
+        /// <summary>
+        /// Method removes duplicates from JSON object, recommend cascading remove neighborhood within method calling readjson within remove neighborhood
+        /// </summary>
+        /// <param name="neighborhoods">Enumerated parsed JSON objet</param>
+        /// <returns>All neighborhoods less duplicates</returns>
         public static IEnumerable<Neighborhoods> RemoveDuplicates(IEnumerable<Neighborhoods> neighborhoods)
         {
             IEnumerable<Neighborhoods> removeDupe = neighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
@@ -95,6 +111,12 @@ namespace Lab08_LINQ_Manhattan
 
             return removeDupe;
         }
+
+        /// <summary>
+        /// Method removes blanks, then groups neighborhoods and only selects first of each grouping, removing duplicates
+        /// </summary>
+        /// <param name="neighborhoods">List of neighborhoods</param>
+        /// <returns>Filtered out list of neighborhoods</returns>
         public static IEnumerable<Neighborhoods> FilterNeighborhoods(List<Neighborhoods> neighborhoods)
 
         {
@@ -110,6 +132,11 @@ namespace Lab08_LINQ_Manhattan
             return filterNeigh;
         }
 
+        /// <summary>
+        /// Another example of a removal of blanks method utilizing lambda
+        /// </summary>
+        /// <param name="neighborhoods">List of neighborhoods</param>
+        /// <returns>List of neighborhoods with removed spaces</returns>
         public static IEnumerable<Neighborhoods> RemoveBlanksTwo(List<Neighborhoods> neighborhoods)
         {
             IEnumerable<Neighborhoods> removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
