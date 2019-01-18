@@ -19,12 +19,13 @@
 ## Visuals
 
 # All neighborhoods in data list
-![SCREENSHOT]()
+![SCREENSHOT](https://github.com/ntibbals/Lab08-LINQ_in_Manhattan/blob/master/sc1.PNG)
 
 # Filtered out neighborhoods without names
-![SCREENSHOT]()
+![SCREENSHOT](https://github.com/ntibbals/Lab08-LINQ_in_Manhattan/blob/master/sc2.PNG)
 
 # Remove duplicates
-![SCREENSHOT]()
+![SCREENSHOT](https://github.com/ntibbals/Lab08-LINQ_in_Manhattan/blob/master/sc3.PNG)
 
 # Consolidated list of filtered out duplicates and unnamed neighborhoods
+![SCREENSHOT](https://github.com/ntibbals/Lab08-LINQ_in_Manhattan/blob/master/sc4.PNG)
