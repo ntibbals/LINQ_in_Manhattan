@@ -13,7 +13,7 @@ namespace Lab08_LINQ_Manhattan
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            ReadJson();
+            DisplayNeighborhoods(ReadJson());
             
         }
 
@@ -39,14 +39,20 @@ namespace Lab08_LINQ_Manhattan
                 };
                 listProps.Add(props);
             }
-            foreach (Properties item in listProps)
+            return listProps;
+        }
+
+        public static List<Properties> DisplayNeighborhoods(List<Properties> neighborhoods)
+        {
+            foreach (Properties item in neighborhoods)
             {
                 if (item != null)
                 {
-                    Console.Write(item.Neighborhood);
+                    Console.WriteLine(item.Neighborhood);
                 }
             }
-            return listProps;
+
+            return neighborhoods;
         }
     }
 }
