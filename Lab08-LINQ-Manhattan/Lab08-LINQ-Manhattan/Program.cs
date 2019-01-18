@@ -14,25 +14,31 @@ namespace Lab08_LINQ_Manhattan
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            //DisplayNeighborhoods(ReadJson());
-            //RemoveNeighborhoodBlanks(ReadJson());
+            DisplayNeighborhoods(ReadJson());
+            RemoveNeighborhoodBlanks(ReadJson());
             RemoveDuplicates((ReadJson()));
+            RemoveBlanksTwo(ReadJson());
             FilterNeighborhoods(ReadJson());
-            //RemoveBlanksTwo(ReadJson());
+            Console.ReadLine();
+            
 
 
         }
 
-        public static List<Properties> ReadJson()
+        /// <summary>
+        /// Method to return a list containing all neighborhoods
+        /// </summary>
+        /// <returns></returns>
+        public static List<Neighborhoods> ReadJson()
         {
             JObject propObject = JObject.Parse(File.ReadAllText(@"../../../../../data.json"));
             var newObject = propObject["features"];
-            List<Properties> listProps = new List<Properties>();
+            List<Neighborhoods> listProps = new List<Neighborhoods>();
             foreach (var p in newObject)
             {
 
 
-                Properties props = new Properties
+                Neighborhoods props = new Neighborhoods
                 {
                     Zip = (string)p["properties"]["zip"],
                     City = (string)p["properties"]["city"],
@@ -47,9 +53,9 @@ namespace Lab08_LINQ_Manhattan
             return listProps;
         }
 
-        public static List<Properties> DisplayNeighborhoods(List<Properties> neighborhoods)
+        public static List<Neighborhoods> DisplayNeighborhoods(List<Neighborhoods> neighborhoods)
         {
-            foreach (Properties item in neighborhoods)
+            foreach (Neighborhoods item in neighborhoods)
             {
                 if (item != null)
                 {
@@ -59,12 +65,12 @@ namespace Lab08_LINQ_Manhattan
 
             return neighborhoods;
         }
-        public static IEnumerable<Properties> RemoveNeighborhoodBlanks(List<Properties> neighborhoods)
+        public static IEnumerable<Neighborhoods> RemoveNeighborhoodBlanks(List<Neighborhoods> neighborhoods)
         {
-            IEnumerable<Properties> spacelessNeighborhoods = from neigh in neighborhoods
+            IEnumerable<Neighborhoods> spacelessNeighborhoods = from neigh in neighborhoods
                                                          where neigh.Neighborhood.Length > 0
                                                          select neigh;
-            foreach (Properties item in spacelessNeighborhoods)
+            foreach (Neighborhoods item in spacelessNeighborhoods)
             {
                 if (item != null)
                 {
@@ -75,11 +81,11 @@ namespace Lab08_LINQ_Manhattan
             return spacelessNeighborhoods;
         }
 
-        public static IEnumerable<Properties> RemoveDuplicates(IEnumerable<Properties> neighborhoods)
+        public static IEnumerable<Neighborhoods> RemoveDuplicates(IEnumerable<Neighborhoods> neighborhoods)
         {
-            IEnumerable<Properties> removeDupe = neighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
+            IEnumerable<Neighborhoods> removeDupe = neighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
 
-            foreach (Properties item in removeDupe)
+            foreach (Neighborhoods item in removeDupe)
             {
                 if (item != null)
                 {
@@ -89,11 +95,11 @@ namespace Lab08_LINQ_Manhattan
 
             return removeDupe;
         }
-        public static IEnumerable<Properties> FilterNeighborhoods(List<Properties> neighborhoods)
+        public static IEnumerable<Neighborhoods> FilterNeighborhoods(List<Neighborhoods> neighborhoods)
 
         {
             var filterNeigh = neighborhoods.Where(p => p.Neighborhood.Length > 0).GroupBy(n => n.Neighborhood).Select( t => t.First()); 
-            foreach (Properties item in filterNeigh)
+            foreach (Neighborhoods item in filterNeigh)
             {
                 if (item != null)
                 {
@@ -104,10 +110,10 @@ namespace Lab08_LINQ_Manhattan
             return filterNeigh;
         }
 
-        public static IEnumerable<Properties> RemoveBlanksTwo(List<Properties> neighborhoods)
+        public static IEnumerable<Neighborhoods> RemoveBlanksTwo(List<Neighborhoods> neighborhoods)
         {
-            IEnumerable<Properties> removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
-            foreach (Properties item in removeBlanks)
+            IEnumerable<Neighborhoods> removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
+            foreach (Neighborhoods item in removeBlanks)
             {
                 if (item != null)
                 {
