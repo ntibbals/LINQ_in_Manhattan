@@ -13,12 +13,12 @@ namespace Lab08_LINQ_Manhattan
         public static string Path = "../../../../../data.json";
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            DisplayNeighborhoods(ReadJson());
-            RemoveNeighborhoodBlanks(ReadJson());
-            RemoveDuplicates(RemoveNeighborhoodBlanks(ReadJson()));
-            RemoveBlanksTwo(ReadJson());
-            FilterNeighborhoods(ReadJson());
+            Console.WriteLine("Neighborhoods: ");
+            //DisplayNeighborhoods(ReadJson());
+            //RemoveNeighborhoodBlanks(ReadJson());
+            //RemoveDuplicates(ReadJson());
+            //RemoveBlanksTwo(ReadJson());
+             FilterNeighborhoods(ReadJson());
             Console.ReadLine();
             
 
@@ -64,7 +64,7 @@ namespace Lab08_LINQ_Manhattan
             {
                 if (item != null)
                 {
-                    Console.WriteLine(item.Neighborhood);
+                    Console.Write($" {item.Neighborhood} |");
                 }
             }
 
@@ -85,7 +85,7 @@ namespace Lab08_LINQ_Manhattan
             {
                 if (item != null)
                 {
-                    Console.WriteLine(item.Neighborhood);
+                    Console.Write($" {item.Neighborhood} |");
                 }
             }
 
@@ -125,7 +125,7 @@ namespace Lab08_LINQ_Manhattan
             {
                 if (item != null)
                 {
-                    Console.WriteLine(item.Neighborhood);
+                    Console.WriteLine($"- {item.Neighborhood}");
                 }
             }
 
