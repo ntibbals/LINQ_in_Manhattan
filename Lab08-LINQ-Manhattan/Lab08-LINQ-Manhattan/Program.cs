@@ -15,10 +15,10 @@ namespace Lab08_LINQ_Manhattan
         {
             Console.WriteLine("Neighborhoods: ");
             //DisplayNeighborhoods(ReadJson());
-            DisplayNeighborhoodsE(RemoveNeighborhoodBlanks(ReadJson()));
-            DisplayNeighborhoodsE(RemoveDuplicates(ReadJson()));
+            //DisplayNeighborhoodsE(RemoveNeighborhoodBlanks(ReadJson()));
+            //DisplayNeighborhoodsE(RemoveDuplicates(ReadJson()));
             DisplayNeighborhoodsE(RemoveBlanksTwo(ReadJson()));
-            DisplayNeighborhoodsE(FilterNeighborhoods(ReadJson()));
+            //DisplayNeighborhoodsE(FilterNeighborhoods(ReadJson()));
             Console.ReadLine();
            
         }
@@ -82,12 +82,12 @@ namespace Lab08_LINQ_Manhattan
                 {
                     Console.WriteLine("-----------------------------------");
                     Console.WriteLine($"- Neighborhood: {item.Neighborhood}");
-                    Console.WriteLine($"- Address: {item.Address}");
-                    Console.WriteLine($"- City: {item.City}");
-                    Console.WriteLine($"- Zip: {item.Zip}");
-                    Console.WriteLine($"- State: {item.State}");
-                    Console.WriteLine($"- Borough: {item.Borough}");
-                    Console.WriteLine($"- County: {item.County}");
+                    //Console.WriteLine($"- Address: {item.Address}");
+                    //Console.WriteLine($"- City: {item.City}");
+                    //Console.WriteLine($"- Zip: {item.Zip}");
+                    //Console.WriteLine($"- State: {item.State}");
+                    //Console.WriteLine($"- Borough: {item.Borough}");
+                    //Console.WriteLine($"- County: {item.County}");
 
 
 
@@ -112,13 +112,16 @@ namespace Lab08_LINQ_Manhattan
         }
 
         /// <summary>
-        /// Method removes duplicates from JSON object, recommend cascading remove neighborhood within method calling readjson within remove neighborhood
+        /// Method removes duplicates from JSON object
         /// </summary>
         /// <param name="neighborhoods">Enumerated parsed JSON objet</param>
         /// <returns>All neighborhoods less duplicates</returns>
         public static IEnumerable<Neighborhoods> RemoveDuplicates(IEnumerable<Neighborhoods> neighborhoods)
         {
-            IEnumerable<Neighborhoods> removeDupe = neighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
+            IEnumerable<Neighborhoods> spacelessNeighborhoods = from neigh in neighborhoods
+                                                                where neigh.Neighborhood.Length > 0
+                                                                select neigh;
+            IEnumerable<Neighborhoods> removeDupe = spacelessNeighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
 
             return removeDupe;
         }
@@ -143,7 +146,7 @@ namespace Lab08_LINQ_Manhattan
         /// <returns>List of neighborhoods with removed spaces</returns>
         public static IEnumerable<Neighborhoods> RemoveBlanksTwo(List<Neighborhoods> neighborhoods)
         {
-            IEnumerable<Neighborhoods> removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
+            IEnumerable<Neighborhoods> removeBlanks = neighborhoods.Where(p => p.Neighborhood != "");
 
             return removeBlanks;
 
