@@ -16,7 +16,8 @@ namespace Lab08_LINQ_Manhattan
             Console.WriteLine("Hello World!");
             //DisplayNeighborhoods(ReadJson());
             //RemoveNeighborhoodBlanks(ReadJson());
-            RemoveDuplicates(RemoveNeighborhoodBlanks(ReadJson()));
+            //RemoveDuplicates(RemoveNeighborhoodBlanks(ReadJson()));
+            //RemoveBlanksTwo(ReadJson());
 
 
         }
@@ -88,5 +89,36 @@ namespace Lab08_LINQ_Manhattan
 
             return removeDupe;
         }
+        public static IEnumerable<Properties> FilterNeighborhoods(List<Properties> neighborhoods)
+        {
+            var filterNeigh = neighborhoods.GroupBy(n => n.Neighborhood).Where(p => p.Neighborhood.Length > 0 && p.First());
+            foreach (Properties item in filterNeigh)
+            {
+                if (item != null)
+                {
+                    Console.WriteLine(item.Neighborhood);
+                }
+            }
+
+            return filterNeigh;
+        }
+
+        public static IEnumerable<Properties> RemoveBlanksTwo(List<Properties> neighborhoods)
+        {
+            var removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
+            foreach (Properties item in removeBlanks)
+            {
+                if (item != null)
+                {
+                    Console.WriteLine(item.Neighborhood);
+                }
+            }
+
+            return removeBlanks;
+
+        }
+
     }
+
 }
+
