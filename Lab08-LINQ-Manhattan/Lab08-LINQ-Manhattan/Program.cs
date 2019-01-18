@@ -4,6 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Lab08_LINQ_Manhattan.Classes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Lab08_LINQ_Manhattan
 {
@@ -13,8 +14,10 @@ namespace Lab08_LINQ_Manhattan
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            DisplayNeighborhoods(ReadJson());
-            
+            //DisplayNeighborhoods(ReadJson());
+            RemoveNeighborhoodBlanks(ReadJson());
+
+
         }
 
         public static List<Properties> ReadJson()
@@ -53,6 +56,21 @@ namespace Lab08_LINQ_Manhattan
             }
 
             return neighborhoods;
+        }
+        public static IEnumerable<Properties> RemoveNeighborhoodBlanks(List<Properties> neighborhoods)
+        {
+            IEnumerable<Properties> spacelessNeighborhoods = from neigh in neighborhoods
+                                                         where neigh.Neighborhood.Length > 0
+                                                         select neigh;
+            foreach (Properties item in spacelessNeighborhoods)
+            {
+                if (item != null)
+                {
+                    Console.WriteLine(item.Neighborhood);
+                }
+            }
+
+            return spacelessNeighborhoods;
         }
     }
 }
