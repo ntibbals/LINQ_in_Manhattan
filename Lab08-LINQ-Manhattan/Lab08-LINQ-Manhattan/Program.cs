@@ -16,7 +16,8 @@ namespace Lab08_LINQ_Manhattan
             Console.WriteLine("Hello World!");
             //DisplayNeighborhoods(ReadJson());
             //RemoveNeighborhoodBlanks(ReadJson());
-            //RemoveDuplicates(RemoveNeighborhoodBlanks(ReadJson()));
+            RemoveDuplicates((ReadJson()));
+            FilterNeighborhoods(ReadJson());
             //RemoveBlanksTwo(ReadJson());
 
 
@@ -25,7 +26,6 @@ namespace Lab08_LINQ_Manhattan
         public static List<Properties> ReadJson()
         {
             JObject propObject = JObject.Parse(File.ReadAllText(@"../../../../../data.json"));
-            Console.WriteLine(propObject);
             var newObject = propObject["features"];
             List<Properties> listProps = new List<Properties>();
             foreach (var p in newObject)
@@ -64,20 +64,20 @@ namespace Lab08_LINQ_Manhattan
             IEnumerable<Properties> spacelessNeighborhoods = from neigh in neighborhoods
                                                          where neigh.Neighborhood.Length > 0
                                                          select neigh;
-            //foreach (Properties item in spacelessNeighborhoods)
-            //{
-            //    if (item != null)
-            //    {
-            //        Console.WriteLine(item.Neighborhood);
-            //    }
-            //}
+            foreach (Properties item in spacelessNeighborhoods)
+            {
+                if (item != null)
+                {
+                    Console.WriteLine(item.Neighborhood);
+                }
+            }
 
             return spacelessNeighborhoods;
         }
 
         public static IEnumerable<Properties> RemoveDuplicates(IEnumerable<Properties> neighborhoods)
         {
-            var removeDupe = neighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
+            IEnumerable<Properties> removeDupe = neighborhoods.GroupBy(n => n.Neighborhood).Select(p => p.First());
 
             foreach (Properties item in removeDupe)
             {
@@ -90,8 +90,9 @@ namespace Lab08_LINQ_Manhattan
             return removeDupe;
         }
         public static IEnumerable<Properties> FilterNeighborhoods(List<Properties> neighborhoods)
+
         {
-            var filterNeigh = neighborhoods.GroupBy(n => n.Neighborhood).Where(p => p.Neighborhood.Length > 0 && p.First());
+            var filterNeigh = neighborhoods.Where(p => p.Neighborhood.Length > 0).GroupBy(n => n.Neighborhood).Select( t => t.First()); 
             foreach (Properties item in filterNeigh)
             {
                 if (item != null)
@@ -105,7 +106,7 @@ namespace Lab08_LINQ_Manhattan
 
         public static IEnumerable<Properties> RemoveBlanksTwo(List<Properties> neighborhoods)
         {
-            var removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
+            IEnumerable<Properties> removeBlanks = neighborhoods.Where(p => p.Neighborhood.Length > 0);
             foreach (Properties item in removeBlanks)
             {
                 if (item != null)
