@@ -80,7 +80,18 @@ namespace Lab08_LINQ_Manhattan
             {
                 if (item != null)
                 {
-                    Console.WriteLine($"- {item.Neighborhood}");
+                    Console.WriteLine("-----------------------------------");
+                    Console.WriteLine($"- Neighborhood: {item.Neighborhood}");
+                    Console.WriteLine($"- Address: {item.Address}");
+                    Console.WriteLine($"- City: {item.City}");
+                    Console.WriteLine($"- Zip: {item.Zip}");
+                    Console.WriteLine($"- State: {item.State}");
+                    Console.WriteLine($"- Borough: {item.Borough}");
+                    Console.WriteLine($"- County: {item.County}");
+
+
+
+
                 }
             }
 
